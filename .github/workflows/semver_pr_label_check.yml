@@ -1,0 +1,20 @@
+name: Semver PR Label Check
+
+on:
+  workflow_call:
+    inputs:
+      repo_token:
+        required: true
+        type: string
+
+jobs:
+  semver_pr_label_check:
+    name: Verify Semver Label on Pull Request
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate Semver Label Presence
+        uses: docker://agilepathway/pull-request-label-checker:latest
+        with:
+          one_of: major-change,minor-change,patch-change,internal-change
+          repo_token: ${{ inputs.repo_token }}
