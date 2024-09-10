@@ -16,5 +16,5 @@ jobs:
       - name: Validate Semver Label Presence
         uses: docker://agilepathway/pull-request-label-checker:latest
         with:
-          one_of: major-change,minor-change,patch-change,internal-change
+          one_of: major-change,minor-change,patch-change,internal-change,release
           repo_token: ${{ secrets.repo_token }}
