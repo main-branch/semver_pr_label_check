@@ -50,13 +50,13 @@ on:
     types: [opened, synchronize, reopened, labeled, unlabeled]
 
 jobs:
-  use_reusable_workflow:
+  run_semver_pr_label_check:
     uses: main-branch/semver_pr_label_check/.github/workflows/semver_pr_label_check.yml@main
-    with:
+    secrets:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-Replace `main` with your repository's default branch name (e.g., `main` or `master`).
+Replace `main` with your repository's default branch name (e.g., `branches: [master]`).
 
 The `repo_token` (typically `${{ secrets.GITHUB_TOKEN }}`) is an automatically
 generated secret provided by GitHub Actions. It is used to authenticate the workflow
@@ -102,6 +102,8 @@ more details on adding notifications.
 Make sure to add the following labels to your GitHub repository to use this workflow
 effectively.
 
+I use `#1D76DB` as the label color, but you can use whatever you want.
+
 ### `major-change`
 
 Use this label for changes that break compatibility with previous versions, such as
@@ -109,7 +111,7 @@ removing a public method, changing a method signature, or modifying the expected
 behavior of a method.
 
 * **Recommended GitHub label description**: *The PR introduces changes that could
-  break existing code using this gem*
+  break code using this gem*
 
 ### `minor-change`
 
