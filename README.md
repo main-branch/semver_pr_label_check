@@ -4,17 +4,20 @@ This reusable GitHub Actions workflow enforces the presence of a valid semver la
 on every PR to your repository.
 
 * [Introduction](#introduction)
-* [Setting Up the Semver PR Label Check Workflow](#setting-up-the-semver-pr-label-check-workflow)
+* [Setting up the semver PR label check workflow](#setting-up-the-semver-pr-label-check-workflow)
+  * [1. Create the required change type labels in GitHub](#1-create-the-required-change-type-labels-in-github)
+  * [2. Add the semver PR label check workflow file to your repository](#2-add-the-semver-pr-label-check-workflow-file-to-your-repository)
 * [Troubleshooting](#troubleshooting)
   * [Workflow does not trigger](#workflow-does-not-trigger)
   * [Missing labels](#missing-labels)
   * [Permissions issues](#permissions-issues)
-* [Handling Errors](#handling-errors)
-* [Change Type Labels](#change-type-labels)
+* [Handling errors](#handling-errors)
+* [Change type labels](#change-type-labels)
   * [`major-change`](#major-change)
   * [`minor-change`](#minor-change)
   * [`patch-change`](#patch-change)
   * [`internal-change`](#internal-change)
+  * [`release`](#release)
 
 ## Introduction
 
@@ -24,22 +27,37 @@ from merging until a valid label is applied.
 The label categorizes the change type, ensuring the artifact version increments
 correctly according to [Semantic Versioning rules](https://semver.org).
 
-One of the following semver labels are required:
+One of the following semver labels is required:
 
 * `major-change`
 * `minor-change`
 * `patch-change`
 * `internal-change`
+* `release`
 
 See [Change Type Labels](#change-type-labels) for detailed definitions of each change
 type.
 
-## Setting Up the Semver PR Label Check Workflow
+## Setting up the semver PR label check workflow
 
-This reusable workflow is designed to be invoked from another workflow that listens
-to pull request events. Create a workflow file in your project that references this
-reusable workflow. We recommend naming the file
-`.github/workflows/semver_pr_label_check.yml`. The file should contain the following:
+### 1. Create the required change type labels in GitHub
+
+Create the semver labels in your repository by navigating to:
+
+```url
+https://github.com/<owner>/<repo>/labels
+```
+
+and then add the labels listed in the [Change type labels](#change-type-labels) section.
+
+### 2. Add the semver PR label check workflow file to your repository
+
+Create a workflow file in your project that references the reusable workflow provided
+by this repository. We recommend naming the file
+.github/workflows/semver_pr_label_check.yml. Replace `main` in `branches: [main]` with
+your repository’s default branch name (e.g., `master`).
+
+The workflow file should contain the following:
 
 ```yaml
 name: Semver PR Label Check
@@ -55,8 +73,6 @@ jobs:
     secrets:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
 ```
-
-Replace `main` with your repository's default branch name (e.g., `branches: [master]`).
 
 The `repo_token` (typically `${{ secrets.GITHUB_TOKEN }}`) is an automatically
 generated secret provided by GitHub Actions. It is used to authenticate the workflow
@@ -78,14 +94,14 @@ event is configured correctly to listen for relevant actions.
 ### Missing labels
 
 Make sure the required semver labels (`major-change`, `minor-change`, `patch-change`,
-`internal-change`) are added to your GitHub repository.
+`internal-change`, `release`) are added to your GitHub repository.
 
 ### Permissions issues
 
 Ensure that the GitHub token used (`repo_token`) has the necessary permissions to add
 or modify labels on pull requests.
 
-## Handling Errors
+## Handling errors
 
 If the workflow fails because the semver label is missing or incorrect, it will block
 the PR from merging.
@@ -97,10 +113,10 @@ comment on the PR.
 Refer to the [GitHub Actions documentation](https://docs.github.com/en/actions) for
 more details on adding notifications.
 
-## Change Type Labels
+## Change type labels
 
-Make sure to add the following labels to your GitHub repository to use this workflow
-effectively.
+**Note**: Before using this workflow, ensure that the required labels are created in
+your repository settings with these names and the desired colors and descriptions.
 
 I use `#1D76DB` as the label color, but you can use whatever you want.
 
@@ -142,3 +158,12 @@ refactoring.
 
 * **Recommended GitHub label description**: *The PR includes changes that are NOT
   user-facing and will NOT require a release*
+
+### `release`
+
+Use this label when the changes are specifically for creating a new release. Release
+PRs should exclusively contain changes necessary for the release, such as version or
+CHANGELOG updates. Any unrelated changes should be in separate PRs.
+
+* **Recommended GitHub label description**: *The PR updates files to create a new
+  release, such as version files and CHANGELOG files*
