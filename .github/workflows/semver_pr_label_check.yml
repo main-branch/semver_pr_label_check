@@ -2,10 +2,10 @@ name: Semver PR Label Check
 
 on:
   workflow_call:
-    inputs:
+    secrets:
       repo_token:
+        description: 'The GitHub token to use for the repository'
         required: true
-        type: string
 
 jobs:
   semver_pr_label_check:
@@ -17,4 +17,4 @@ jobs:
         uses: docker://agilepathway/pull-request-label-checker:latest
         with:
           one_of: major-change,minor-change,patch-change,internal-change
-          repo_token: ${{ inputs.repo_token }}
+          repo_token: ${{ secrets.repo_token }}
