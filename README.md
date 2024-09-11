@@ -42,13 +42,37 @@ type.
 
 ### 1. Create the required change type labels in GitHub
 
-Create the semver labels in your repository by navigating to:
+To automate the creation of required labels in your repository, paste the following
+commands into your terminal. Ensure you run these commands from the working directory
+of the repository you want to update.
 
-```url
-https://github.com/<owner>/<repo>/labels
+**Note:** *You **must** install the [GitHub command line tool
+(gh)](https://github.com/cli/cli#installation) before running these commands.*
+
+As an alternative, you can create these labels manually in your GitHub repository
+using the GitHub UI.
+
+```shell
+gh label create "major-change" \
+  --description "The PR introduces changes that could break code using this gem" \
+  --color 1D76DB --force
+
+gh label create "minor-change" \
+  --description "The PR adds new features, deprecates existing features, or makes substantial improvements" \
+  --color 1D76DB --force
+
+gh label create "patch-change" \
+  --description "The PR fixes bugs or makes other small changes that do not add to or change existing functionality" \
+  --color 1D76DB --force
+
+gh label create "internal-change" \
+  --description "The PR includes changes that are NOT user-facing and will NOT require a release" \
+  --color 1D76DB --force
+
+gh label create "release" \
+  --description "The PR updates files to create a new release, such as version files and CHANGELOG files" \
+  --color 1D76DB --force
 ```
-
-and then add the labels listed in the [Change type labels](#change-type-labels) section.
 
 ### 2. Add the semver PR label check workflow file to your repository
 
@@ -115,19 +139,14 @@ more details on adding notifications.
 
 ## Change type labels
 
-**Note**: Before using this workflow, ensure that the required labels are created in
+Before using this workflow, ensure that the required labels are created in
 your repository settings with these names and the desired colors and descriptions.
-
-I use `#1D76DB` as the label color, but you can use whatever you want.
 
 ### `major-change`
 
 Use this label for changes that break compatibility with previous versions, such as
 removing a public method, changing a method signature, or modifying the expected
 behavior of a method.
-
-* **Recommended GitHub label description**: *The PR introduces changes that could
-  break code using this gem*
 
 ### `minor-change`
 
@@ -138,17 +157,11 @@ improving performance without breaking existing functionality.
 It's also common to include substantial improvements or optimizations in this
 category, as long as they don't alter the expected behavior of the existing API.
 
-* **Recommended GitHub label description**: *The PR adds new features, deprecates
-  existing features, or makes substantial improvements*
-
 ### `patch-change`
 
 Use this label for changes that fix bugs or make other small modifications that do
 not affect the API or alter existing functionality, such as fixing user-facing typos
 or updating user documentation.
-
-* **Recommended GitHub label description**: *The PR fixes bugs or makes other small
-  changes that do not add to or change existing functionality*
 
 ### `internal-change`
 
@@ -156,14 +169,8 @@ Use this label for changes that do not impact end-users and do not require a rel
 such as updating developer documentation, adjusting CI workflows, or minor code
 refactoring.
 
-* **Recommended GitHub label description**: *The PR includes changes that are NOT
-  user-facing and will NOT require a release*
-
 ### `release`
 
 Use this label when the changes are specifically for creating a new release. Release
 PRs should exclusively contain changes necessary for the release, such as version or
 CHANGELOG updates. Any unrelated changes should be in separate PRs.
-
-* **Recommended GitHub label description**: *The PR updates files to create a new
-  release, such as version files and CHANGELOG files*
