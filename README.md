@@ -78,7 +78,7 @@ using the GitHub UI.
 
 Create a workflow file in your project that references the reusable workflow provided
 by this repository. We recommend naming the file
-`.github/workflows/semver_pr_label_check.yml`. 
+`.github/workflows/semver_pr_label_check.yml`.
 
 Replace `main` in `branches: [main]` with
 your repository’s default branch name (e.g., `master`).
@@ -95,7 +95,7 @@ on:
 
 jobs:
   run_semver_pr_label_check:
-    uses: main-branch/semver_pr_label_check/.github/workflows/semver_pr_label_check.yml@main
+    uses: main-branch/semver_pr_label_check/.github/workflows/semver_pr_label_check.yml@v1
     secrets:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
 ```
