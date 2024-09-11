@@ -49,9 +49,6 @@ of the repository you want to update.
 **Note:** *You **must** install the [GitHub command line tool
 (gh)](https://github.com/cli/cli#installation) before running these commands.*
 
-As an alternative, you can create these labels manually in your GitHub repository
-using the GitHub UI.
-
 ```shell
 gh label create "major-change" \
   --description "The PR introduces changes that could break code using this gem" \
@@ -74,11 +71,16 @@ gh label create "release" \
   --color 1D76DB --force
 ```
 
+As an alternative, you can create these labels manually in your GitHub repository
+using the GitHub UI.
+
 ### 2. Add the semver PR label check workflow file to your repository
 
 Create a workflow file in your project that references the reusable workflow provided
 by this repository. We recommend naming the file
-.github/workflows/semver_pr_label_check.yml. Replace `main` in `branches: [main]` with
+`.github/workflows/semver_pr_label_check.yml`. 
+
+Replace `main` in `branches: [main]` with
 your repository’s default branch name (e.g., `master`).
 
 The workflow file should contain the following:
