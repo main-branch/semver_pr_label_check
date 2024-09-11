@@ -77,13 +77,14 @@ using the GitHub UI.
 ### 2. Add the semver PR label check workflow file to your repository
 
 Create a workflow file in your project that references the reusable workflow provided
-by this repository. We recommend naming the file
-`.github/workflows/semver_pr_label_check.yml`.
+by this repository. We recommend naming the file:
 
-Replace `main` in `branches: [main]` with
-your repository’s default branch name (e.g., `master`).
+```text
+.github/workflows/semver_pr_label_check.yml
+```
 
-The workflow file should contain the following:
+The workflow file should contain the following (if needed, replace `main` in
+`branches: [main]` with your repository’s default branch name (e.g., `master`):
 
 ```yaml
 name: Semver PR Label Check
