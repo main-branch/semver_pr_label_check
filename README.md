@@ -91,7 +91,7 @@ name: Semver PR Label Check
 on:
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened, labeled, unlabeled]
+    types: [opened, reopened, labeled, unlabeled]
 
 jobs:
   run_semver_pr_label_check:
