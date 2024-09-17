@@ -1,6 +1,6 @@
 # Semver PR Label Check Workflow
 
-[![Slack](https://img.shields.io/badge/slack-main--branch/ruby__git-yellow.svg?logo=slack)](https://main-branch.slack.com/archives/C07MQBLMJVB)
+[![Slack](https://img.shields.io/badge/slack-main--branch/semver__pr__label__check-yellow.svg?logo=slack)](https://main-branch.slack.com/archives/C07MQBLMJVB)
 
 This reusable GitHub Actions workflow enforces the presence of a valid semver label
 on every PR to your repository.
